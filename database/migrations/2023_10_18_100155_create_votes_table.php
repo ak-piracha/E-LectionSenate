@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('voters');
+            $table->foreignId('voter_id')->constrained('voters');
             $table->foreignId('election_id')->constrained('elections');
             $table->foreignId('type_id')->constrained('vote_types');
             $table->foreignId('candidate_id')->constrained('candidates');
