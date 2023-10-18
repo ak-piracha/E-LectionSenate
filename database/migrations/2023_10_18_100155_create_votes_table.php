@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('voters');
             $table->foreignId('election_id')->constrained('elections');
-            $table->foreignId('type_id')->constrained(''); #name of the typeTable
-            $table->foreignId('candidate_id')->constrained(''); #name of the candidate
+            $table->foreignId('type_id')->constrained('vote_types');
+            $table->foreignId('candidate_id')->constrained('candidates');
             $table->integer('priority');
             $table->timestamps();
         });

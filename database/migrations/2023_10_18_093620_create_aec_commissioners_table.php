@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('candidates', function (Blueprint $table) {
+        Schema::create('aec_commissioners', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->foreignId('party_id')->constrained('parties');
-            $table->string('current_status');
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('phone_number');
+            $table->date('started_at');
+            $table->date('end_at')->nullable();
+
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('candidates');
+        Schema::dropIfExists('aec_commissioners');
     }
 };
