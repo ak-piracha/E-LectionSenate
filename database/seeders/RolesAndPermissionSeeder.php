@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -22,126 +25,82 @@ class RolesAndPermissionSeeder extends Seeder
         $miscPermission=Permission::create(['name'=>'N/A']);
 
         //User Model
-        $userPermission1=Permission::create(['name'=>'create: user']);
-        $userPermission2=Permission::create(['name'=>'read: user']);
-        $userPermission3=Permission::create(['name'=>'update: user']);
-        $userPermission4=Permission::create(['name'=>'delete: user']);
+        $voterPermission1=Permission::create(['name'=>'create: voter']);
+        $voterPermission2=Permission::create(['name'=>'read: voter']);
+        $voterPermission3=Permission::create(['name'=>'update: voter']);
+        $voterPermission4=Permission::create(['name'=>'delete: voter']);
 
-        //Role Model
-        $rolePermission1=Permission::create(['name'=>'create: role']);
-        $rolePermission2=Permission::create(['name'=>'read: role']);
-        $rolePermission3=Permission::create(['name'=>'update: role']);
-        $rolePermission4=Permission::create(['name'=>'delete: role']);
+        $aecPermission1=Permission::create(['name'=>'create: aec']);
+        $aecPermission2=Permission::create(['name'=>'read: aec']);
+        $aecPermission3=Permission::create(['name'=>'update: aec']);
+        $aecPermission4=Permission::create(['name'=>'delete: aec']);
 
-        //Permission Model
-        $permission1=Permission::create(['name'=>'create: permission']);
-        $permission2=Permission::create(['name'=>'read: permission']);
-        $permission3=Permission::create(['name'=>'update: permission']);
-        $permission4=Permission::create(['name'=>'delete: permission']);
+        $partyPermission1=Permission::create(['name'=>'create: party']);
+        $partyPermission2=Permission::create(['name'=>'read: party']);
+        $partyPermission3=Permission::create(['name'=>'update: party']);
+        $partyPermission4=Permission::create(['name'=>'delete: party']);
 
-        //Admins
-        $adminPermission2=Permission::create(['name'=>'read: permission']);
-        $adminPermission1=Permission::create(['name'=>'update: permission']);
+        $candidatePermission1=Permission::create(['name'=>'create: candidate']);
+        $candidatePermission2=Permission::create(['name'=>'read: candidate']);
+        $candidatePermission3=Permission::create(['name'=>'update: candidate']);
+        $candidatePermission4=Permission::create(['name'=>'delete: candidate']);
 
-        //Create roles
-        $userRole=Role:: create(['name'=>'user'])->syncPermissions([
-            $miscPermission,
+        $electionPermission1=Permission::create(['name'=>'create: election']);
+        $electionPermission2=Permission::create(['name'=>'read: election']);
+        $electionPermission3=Permission::create(['name'=>'update: election']);
+        $electionPermission4=Permission::create(['name'=>'delete: election']);
+
+        $votePermission1=Permission::create(['name'=>'create: vote']);
+        $votePermission2=Permission::create(['name'=>'read: vote']);
+
+        // Create roles
+        $voterRole=Role:: create(['name'=>'voter'])->syncPermissions([
+            $votePermission1,
         ]);
 
         $superAdminRole=Role:: create(['name'=>'super-admin'])->syncPermissions([
-            $userPermission1,
-            $miscPermission,
-            $userPermission2,
-            $userPermission3,
-            $userPermission4,
-            $rolePermission1,
-            $rolePermission2,
-            $rolePermission3,
-            $rolePermission4,
-            $permission1,
-            $permission2,
-            $permission3,
-            $permission4,
-            $adminPermission2,
-            $adminPermission1,
-            $userPermission1,
+            $voterPermission1,
+            $voterPermission2,
+            $voterPermission3,
+            $voterPermission4,
+            $aecPermission1,
+            $aecPermission2,
+            $aecPermission3,
+            $aecPermission4,
         ]);
 
-        $adminRole=Role:: create(['name'=>'admin'])->syncPermissions([
-            $userPermission1,
-            $miscPermission,
-            $userPermission2,
-            $userPermission3,
-            $userPermission4,
-            $rolePermission1,
-            $rolePermission2,
-            $rolePermission3,
-            $rolePermission4,
-            $permission1,
-            $permission2,
-            $permission3,
-            $permission4,
-            $adminPermission2,
-            $adminPermission1,
-            $userPermission1,
+        $aecCommisionerRole=Role:: create(['name'=>'admin'])->syncPermissions([
+            $partyPermission1,
+            $partyPermission2,
+            $partyPermission3,
+            $partyPermission4,
+            $electionPermission1,
+            $electionPermission2,
+            $electionPermission3,
+            $electionPermission4,
+            $candidatePermission1,
+            $candidatePermission2,
+            $candidatePermission3,
+            $candidatePermission4,
+            $votePermission2,
         ]);
 
-        $moderatorRole=Role:: create(['name'=>'moderator'])->syncPermissions([
-            $userPermission2,
-            $rolePermission2,
-            $permission2,
-            $adminPermission1,
-        ]);
-
-        $developerRole=Role:: create(['name'=>'developer'])->syncPermissions([
-            $adminPermission1,
-        ]);
-
-        User::create([
+        User::updateOrCreate([
             'name'=>'super admin',
             'is_admin'=>1,
             'email'=>'super@admin.com',
-            'email_varified_at'=>now(),
             'password'=>Hash::make('password'),
             'remember_token'=> Str::random(10),
-        ])->assignRole($superAdminRole);
-
-        User::create([
-            'name'=>'admin',
-            'is_admin'=>1,
-            'email'=>'admin@admin.com',
-            'email_varified_at'=>now(),
-            'password'=>Hash::make('password'),
-            'remember_token'=> Str::random(10),
-        ])->assignRole($adminRole);
-
-        User::create([
-            'name'=>'moderator',
-            'is_admin'=>1,
-            'email'=>'moderator@admin.com',
-            'email_varified_at'=>now(),
-            'password'=>Hash::make('password'),
-            'remember_token'=> Str::random(10),
-        ])->assignRole($moderatorRole);
-
-        User::create([
-            'name'=>'developer',
-            'is_admin'=>1,
-            'email'=>'developer@admin.com',
-            'email_varified_at'=>now(),
-            'password'=>Hash::make('password'),
-            'remember_token'=> Str::random(10),
-        ])->assignRole($developerRole);
+        ],[])->assignRole($superAdminRole);
 
         for($i=1;$i<50;$i++){
-            User::create([
-                'name'=>'test '.$i,
+            User::updateOrCreate([
+                'name'=>'voter '.$i,
                 'is_admin'=>0,
-                'email'=>'test ' .$i.'@test.com',
-                'email_varified_at'=>now(),
+                'email'=>'voter ' .$i.'@election.com',
                 'password'=>Hash::make('password'),
                 'remember_token'=> Str::random(10),
-            ])->assignRole($userRole);
+            ],[])->assignRole($voterRole);
         }
     }
 }
