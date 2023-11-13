@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Model\VoteType;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\VoteType;
 use Illuminate\Database\Seeder;
 
 class VoteTypesTableSeeder extends Seeder
