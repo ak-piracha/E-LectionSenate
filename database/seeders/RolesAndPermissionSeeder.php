@@ -93,11 +93,19 @@ class RolesAndPermissionSeeder extends Seeder
             'remember_token'=> Str::random(10),
         ],[])->assignRole($superAdminRole);
 
+        User::updateOrCreate([
+            'name'=>'aec commissioner',
+            'is_admin'=>1,
+            'email'=>'aec-commissioner@admin.com',
+            'password'=>Hash::make('password'),
+            'remember_token'=> Str::random(10),
+        ],[])->assignRole($aecCommisionerRole);
+
         for($i=1;$i<50;$i++){
             User::updateOrCreate([
-                'name'=>'voter '.$i,
+                'name'=>'voter'.$i,
                 'is_admin'=>0,
-                'email'=>'voter ' .$i.'@election.com',
+                'email'=>'voter ' .$i.'@gmail.com',
                 'password'=>Hash::make('password'),
                 'remember_token'=> Str::random(10),
             ],[])->assignRole($voterRole);
