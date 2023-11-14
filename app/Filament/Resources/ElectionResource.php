@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextColumn;
-use App\Rules\EndDateAfterStartDate;
 class ElectionResource extends Resource
 {
     protected static ?string $model = Election::class;
