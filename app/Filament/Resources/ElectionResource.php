@@ -25,7 +25,7 @@ class ElectionResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->required(),
+                TextInput::make('name')->required()->unique(),
                 DatePicker::make('start_date')->nullable()->required(),
                 DatePicker::make('end_date')->nullable()->after('start_date')->required(),
                 TextInput::make('status')->required(),
