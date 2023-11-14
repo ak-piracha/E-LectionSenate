@@ -15,7 +15,7 @@ class Election extends Model
         'end_date',
         'status',
         'atl_candidate_no',
-        'blt_candidate_no',
+        'btl_candidate_no',
     ];
 
 }
