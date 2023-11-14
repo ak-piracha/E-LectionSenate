@@ -30,7 +30,7 @@ class ElectionResource extends Resource
                 DatePicker::make('end_date')->nullable()->after('start_date')->required(),
                 TextInput::make('status')->required(),
                 TextInput::make('atl_candidate_no')->required()->numeric(),
-                TextInput::make('blt_candidate_no')->required()->numeric(),
+                TextInput::make('btl_candidate_no')->required()->numeric(),
 
             ]);
     }
@@ -44,7 +44,7 @@ class ElectionResource extends Resource
                 TextColumn::make('end_date')->searchable()->sortable(),
                 TextColumn::make('status')->searchable()->sortable(),
                 TextColumn::make('atl_candidate_no')->searchable()->sortable(),
-                TextColumn::make('blt_candidate_no')->searchable()->sortable(),
+                TextColumn::make('btl_candidate_no')->searchable()->sortable(),
 
             ])
             ->filters([

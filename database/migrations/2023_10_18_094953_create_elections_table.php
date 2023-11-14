@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('end_date');
             $table->string('status');
             $table->integer('atl_candidate_no');
-            $table->integer('blt_candidate_no');
+            $table->integer('btl_candidate_no');
             $table->timestamps();
         });
     }
