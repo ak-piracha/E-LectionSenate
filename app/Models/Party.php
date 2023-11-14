@@ -13,4 +13,9 @@ class Party extends Model
         'name',
         'leader',
     ];
+
+    public function party_elections()
+    {
+        return $this->belongsToMany(PartyElection::class);
+    }
 }

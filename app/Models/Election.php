@@ -18,4 +18,9 @@ class Election extends Model
         'btl_candidate_no',
     ];
 
+    public function parties()
+    {
+        return $this->belongsToMany(Party::class, 'party_election');
+    }
+
 }

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ElectionResource\Pages;
 use App\Filament\Resources\ElectionResource\RelationManagers;
 use App\Models\Election;
+use App\Models\Party;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
@@ -12,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
@@ -43,6 +45,14 @@ class ElectionResource extends Resource
                 DatePicker::make('end_date')->nullable()->after('start_date')->required()->inlineLabel(),
                 TextInput::make('atl_candidate_no')->required()->numeric()->inlineLabel(),
                 TextInput::make('btl_candidate_no')->required()->numeric()->inlineLabel(),
+                Select::make('party_elections')
+                    ->label('Parties')
+                    ->multiple()
+                    ->placeholder('')
+                    ->options(Party::all()->pluck('name', 'id')->toArray())
+                    ->searchable()
+                    ->required()
+                    ->inlineLabel(),
 
             ]);
     }
@@ -64,6 +74,26 @@ class ElectionResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
             ]);
+    }
+
+    protected function fillForm(Form $form, Model $record): Form
+    {
+        $form = parent::fillForm($form, $record);
+        $form->fill([
+            'party_elections' => $record->parties()->pluck('id')->toArray(),
+        ]);
+
+        return $form;
+    }
+
+    protected function saveForm(Form $form, Model $record): Model
+    {
+        $record = parent::saveForm($form, $record);
+
+        $partyIds = $form->getState('party_election') ?: [];
+        $record->parties()->sync($partyIds);
+
+        return $record;
     }
 
     public static function getPages(): array
