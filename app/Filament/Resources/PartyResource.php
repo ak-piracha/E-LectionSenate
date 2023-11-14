@@ -26,8 +26,8 @@ class PartyResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->required()->unique(),
-                TextInput::make('leader')->required(),
+                TextInput::make('name')->required()->unique()->inlineLabel(),
+                TextInput::make('leader')->required()->inlineLabel(),
             ]);
     }
 
@@ -43,7 +43,6 @@ class PartyResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ]);
     }
 
