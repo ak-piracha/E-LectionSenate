@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('votes', function (Blueprint $table) {
+        Schema::create('btl_votes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('voter_id')->constrained('voters');
             $table->foreignId('election_id')->constrained('elections');
-            $table->foreignId('type_id')->constrained('vote_types');
             $table->foreignId('candidate_id')->constrained('candidates');
             $table->integer('priority');
             $table->timestamps();

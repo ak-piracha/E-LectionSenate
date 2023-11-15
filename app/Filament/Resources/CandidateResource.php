@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CandidatesResource\Pages;
-use App\Filament\Resources\CandidatesResource\RelationManagers;
+use App\Filament\Resources\CandidateResource\Pages;
+use App\Filament\Resources\CandidateResource\RelationManagers;
 use App\Models\Candidate;
 use App\Models\Party;
 use Filament\Forms;
@@ -17,7 +17,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CandidatesResource extends Resource
+class CandidateResource extends Resource
 {
     protected static ?string $model = Candidate::class;
 
