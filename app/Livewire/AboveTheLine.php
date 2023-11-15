@@ -28,6 +28,13 @@ class AboveTheLine extends Component implements HasForms
 
     public function mount(): void
     {
+
+         $this->parties = Party::with('candidates')->get();
+
+     // Check if parties are loaded
+        if (!$this->parties) {
+            $this->parties = collect(); // Initialize as an empty collection
+        }
         $this->parties = Party::all();
         $this->partyCount = Party::count();
         $voter = Voter::where('user_id', Auth::id())->first();
