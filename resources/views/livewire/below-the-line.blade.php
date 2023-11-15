@@ -2,7 +2,7 @@
     <label for="voteForm" class="text-lg font-bold">Below The Line</label>
     <form id="voteForm" wire:submit.prevent="submit" class="flex flex-col">
         <div class="table-responsive">
-            {{-- {{ $this->form }} --}}
+            {{ $this->form }}
         </div>
         <div class="ml-auto mt-4">
             <x-secondary-button wire:click="submit" wire:loading.attr="disabled">
