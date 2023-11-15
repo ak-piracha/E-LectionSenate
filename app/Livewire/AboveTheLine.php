@@ -3,6 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Party;
+use App\Models\AtlVote;
+use App\Models\Voter;
+use Auth;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -18,6 +21,7 @@ class AboveTheLine extends Component implements HasForms
     use InteractsWithForms;
     public $partyCount;
     public $parties;
+    public $eligible;
 
     // Properties to store the input values
     public $inputValues = [];
@@ -26,8 +30,15 @@ class AboveTheLine extends Component implements HasForms
     {
         $this->parties = Party::all();
         $this->partyCount = Party::count();
+        $voter = Voter::where('user_id', Auth::id())->first();
 
-        // Initialize input values array
+        if ($voter) {
+            $this->eligible = $voter->is_voting_eligible;
+        } else {
+            $this->eligible = false;
+        }
+        Log::info($this->eligible);
+
         foreach ($this->parties as $party) {
             $this->inputValues[$party->id] = $party->name;
         }
@@ -55,6 +66,29 @@ class AboveTheLine extends Component implements HasForms
     {
         foreach ($this->inputValues as $partyId => $value) {
             Log::info("Party ID {$partyId}: {$value}");
+        }
+
+        $this->personSubmit();
+
+        Voter::updateOrCreate(
+            [
+                'user_id' =>  Auth::id(),
+            ],
+            [
+                'is_voting_eligible' => false,
+            ]
+        );
+    }
+
+    public function personSubmit()
+    {
+        foreach ($this->inputValues as $partyId => $value) {
+            AtlVote::create([
+                'voter_id' => Auth::id(),
+                'election_id' => 1,
+                'party_id' => $partyId,
+                'priority' => $value,
+            ]);
         }
     }
 

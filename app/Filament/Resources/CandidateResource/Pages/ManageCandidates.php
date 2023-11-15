@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\CandidatesResource\Pages;
+namespace App\Filament\Resources\CandidateResource\Pages;
 
-use App\Filament\Resources\CandidatesResource;
+use App\Filament\Resources\CandidateResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ManageRecords;
 
 class ManageCandidates extends ManageRecords
 {
-    protected static string $resource = CandidatesResource::class;
+    protected static string $resource = CandidateResource::class;
 
     protected function getHeaderActions(): array
     {
